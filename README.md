@@ -20,12 +20,12 @@ developer.
 Screens:
 - [ ] Screen 1 : Text Boxes for username and password and submit button to be provided.
 - [ ] Screen 2: To view information for Superior.
-  -This screen should provide a list of corresponding subordinates.
-  -Once a researcher’s name is selected the new screen should populate the corresponding
+  * This screen should provide a list of corresponding subordinates.
+  * Once a researcher’s name is selected the new screen should populate the corresponding
 researchers work information from database and also option to view any corresponding
 files using ‘View File’ button
 - [ ] Screen 3: This should be visible only for researchers.
-  - If a researcher is approved to view others work then this screen should have facility to
+  * If a researcher is approved to view others work then this screen should have facility to
 select some work based on year/ search by Topic.
   - Update button to be provided to redirect to screen 3
 - [ ] Screen 4:
