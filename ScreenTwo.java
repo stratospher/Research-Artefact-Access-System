@@ -4,9 +4,14 @@ public class ScreenTwo
 {  
         ScreenTwo(){  
         Frame f= new Frame();  
+
+        Label l = new Label("Superior Name:");          
+        l.setAlignment(Label.CENTER);  
+        l.setSize(400,75); 
+
         final Label label = new Label();          
         label.setAlignment(Label.CENTER);  
-        label.setSize(400,100);  
+        label.setSize(400,175);  
         Button b=new Button("View Research Work");  
         b.setBounds(200,200,170,20);  
         final Choice c=new Choice();  
@@ -16,7 +21,8 @@ public class ScreenTwo
         c.add("Researcher 3");  
         c.add("Researcher 4");  
         c.add("Researcher 5");  
-        f.add(c);f.add(label); f.add(b);  
+        f.add(l);
+        f.add(c);f.add(label);f.add(b);  
         f.setSize(400,400);  
         f.setLayout(null);  
         f.setVisible(true);  
