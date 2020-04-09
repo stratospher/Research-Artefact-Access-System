@@ -13,7 +13,9 @@ public class ScreenTwo
         label.setAlignment(Label.CENTER);  
         label.setSize(400,175);  
         Button b=new Button("View Research Work");  
-        b.setBounds(200,200,170,20);  
+        b.setBounds(200,200,170,20); 
+        Button logout=new Button("Logout");  
+        logout.setBounds(200,250,170,20);  
         final Choice c=new Choice();  
         c.setBounds(100,100,175,75);  
         c.add("Researcher 1");  
@@ -22,7 +24,9 @@ public class ScreenTwo
         c.add("Researcher 4");  
         c.add("Researcher 5");  
         f.add(l);
-        f.add(c);f.add(label);f.add(b);  
+        f.add(c);f.add(label);
+        f.add(b);  
+        f.add(logout);
         f.setSize(400,400);  
         f.setLayout(null);  
         f.setVisible(true);  
