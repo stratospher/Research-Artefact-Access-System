@@ -13,7 +13,9 @@ public class ScreenTwo_1
         label.setAlignment(Label.CENTER);  
         label.setSize(400,175);  
         Button b=new Button("Select Research Work");  
-        b.setBounds(200,200,170,20);  
+        b.setBounds(200,200,170,20); 
+        Button goback=new Button("Go Back");  
+        goback.setBounds(200,250,170,20);  
         final Choice c=new Choice();  
         c.setBounds(100,100,175,75);  
         c.add("Work 1");  
@@ -22,7 +24,7 @@ public class ScreenTwo_1
         c.add("Work 4");  
         c.add("Work 5");  
         f.add(l);
-        f.add(c);f.add(label);f.add(b);  
+        f.add(c);f.add(label);f.add(b);f.add(goback);  
         f.setSize(400,400);  
         f.setLayout(null);  
         f.setVisible(true);  
