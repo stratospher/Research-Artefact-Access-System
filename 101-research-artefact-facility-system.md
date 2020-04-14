@@ -136,7 +136,7 @@ Select the MySQL driver in the prompt and give correct path to the .jar file\(ex
 `1. The password for administrators to register user is admin`
 
 
-`2. The  getConnection\(String url\)method of Java DriverManager which establishes connection with the database has to be changed according to your system.Instructions on where to change is given in comment section of all .java files`
+`2. The  getConnection(String url)method of Java DriverManager which establishes connection with the database has to be changed according to your system.Instructions on where to change is given in comment section of all .java files`
 
 
 ## AUTHOR
