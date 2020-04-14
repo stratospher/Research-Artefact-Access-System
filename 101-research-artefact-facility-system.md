@@ -26,7 +26,7 @@ Built with [NetBeans](https://netbeans.org/features/java/index.html) framework
 
 ## Class Diagram
 
-![](https://ibb.co/0DyGcWj)
+![](.gitbook/assets/screenshot-2020-04-14-at-1.41.55-pm.png)
 
 #### ACTORS
 
