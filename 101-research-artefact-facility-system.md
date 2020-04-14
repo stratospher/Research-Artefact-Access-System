@@ -8,17 +8,7 @@ The application provides facilities for researchers to store and access their re
 
 ## Output Screenshots
 
-![](.gitbook/assets/screenshot-2020-04-14-at-1.23.04-pm.png)
-
-![](.gitbook/assets/screenshot-2020-04-14-at-1.24.29-pm.png)
-
 ![](.gitbook/assets/screenshot-2020-04-14-at-1.23.22-pm.png)
-
-![](.gitbook/assets/screenshot-2020-04-14-at-1.22.07-pm.png)
-
-![](.gitbook/assets/screenshot-2020-04-14-at-1.24.08-pm.png)
-
-![](.gitbook/assets/screenshot-2020-04-14-at-1.24.18-pm.png)
 
 ## Frameworks used
 
