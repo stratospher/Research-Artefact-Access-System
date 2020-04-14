@@ -1,9 +1,3 @@
----
-description: >-
-  An amazing Research Artefact Facility System designed using Java Swing and the
-  concepts of Object Oriented Design and Programming!
----
-
 # 101 Research Artefact Facility System
 
 The application provides facilities for researchers to store and access their research data with ease ,for superiors to monitor their subordinate works and for researchers with advisor approval to view all researches in the 101 Research Artefact Facility System!
