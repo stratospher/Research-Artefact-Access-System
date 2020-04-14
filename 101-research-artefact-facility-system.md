@@ -117,21 +117,24 @@ CREATE TABLE `fileinfo` (
 
  
 
-{% hint style="info" %}
+:bangbang:
+`
  Make sure you have the JDBC MySQL connector installed in the Libraries folder of the project with correct path.
-{% endhint %}
+`
 
 ![](.gitbook/assets/screenshot-2020-04-14-at-2.19.58-pm.png)
 
-{% hint style="info" %}
+:bangbang:
+`
 Make sure that MySQL server is running in localhost:3306\(most cases in port 3306\) and setup that connection by going to Services Tab-&gt;Databases-&gt;Regsiter MySQL Server
-{% endhint %}
+`
 
 ![](.gitbook/assets/screenshot-2020-04-14-at-2.25.35-pm.png)
 
-{% hint style="info" %}
+:bangbang:
+`
 Select the MySQL driver in the prompt and give correct path to the .jar file\(example filename -mysql-connector-java-8.0.19.jar\).Refer images below for more help.
-{% endhint %}
+`
 
 ![](.gitbook/assets/screenshot-2020-04-14-at-2.21.00-pm.png)
 
@@ -139,12 +142,12 @@ Select the MySQL driver in the prompt and give correct path to the .jar file\(ex
 
 ## NOTE
 
-{% hint style="warning" %}
+`
 
 
 1. The password for administrators to register user is admin
 2. The  **getConnection\(String url\)** method of Java DriverManager which establishes connection with the database has to be changed according to your system.Instructions on where to change is given in comment section of all .java files
-{% endhint %}
+`
 
 ## AUTHOR
 
