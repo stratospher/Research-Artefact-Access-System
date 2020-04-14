@@ -64,7 +64,7 @@ Built with [NetBeans](https://netbeans.org/features/java/index.html) framework
    * [Java SE Development Kit 8 \(JDK 8\)](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
    *  [NetBeans IDE](https://netbeans.org/downloads/)
    * [MySQL](https://www.mysql.com)
-   * \*\*\*\*[**Connector/J 8.0.19**](https://dev.mysql.com/downloads/connector/j/)\*\*\*\*
+   * \*\*\*\*[Connector/J 8.0.19](https://dev.mysql.com/downloads/connector/j/)\*\*\*\*
    * [MySQL Workbench](https://dev.mysql.com/downloads/workbench/) \(or anyother database as per convenience\)
 2. Set up database as shown in class diagram.  Create a schema named `researchartefact` .Use the SQL commands below to CREATE TABLES 
 3. Clone the project in your system and open using Netbeans.
