@@ -1,9 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ *
+ * @author ruhithomas
+ * DATE:14 April 2020
+ * COURSE:CS206 Object Oriented and Design Programming
+ * 
+ * DESCRIPTION:
+ * contains all global variables used
+ *
+ * @note: set default location where you want to store files
  */
 package research;
+
+import java.util.ArrayList;
 
 /**
  *
@@ -12,5 +20,6 @@ package research;
 public class Globals {
 
    public static String uname="";
+   public static String filepath = "/Users/ruhithomas/research/researchfiles/";
    ///
 }

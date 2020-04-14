@@ -5,34 +5,39 @@
  */
 package research;
 
+import java.awt.Button;
+
 /**
  *
  * @author ruhithomas
  */
-class User {
+public class Researchfile {
     
-    private String username;
-    private String filepath;
-    private int year;
+    private String filename;
     private String topic;
+    private int  year;
+    private String filepath;
+    private Button button;
     
-    public User(String username,String topic,int year,String filepath)
+    public Researchfile(String filename,String topic,int year,String filepath)
     {
-        this.username=username;
+        this.filename=filename;
         this.topic=topic;
         this.year=year;
-        this.filepath=filepath; 
+        this.filepath=filepath;
+        this.button=new Button("hi");
     }
     
-    public String getusername()
+    public String getfilename()
     {
-        return username;
+        return filename;
     }
     
     public String gettopic()
     {
         return topic;
     }
+    
     public int getyear()
     {
         return year;
@@ -42,4 +47,11 @@ class User {
     {
         return filepath;
     }
+    
+    public Button getbutton()
+    {
+        return button;
+    }
+    
+    
 }

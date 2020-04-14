@@ -5,125 +5,133 @@
  * COURSE:CS206 Object Oriented and Design Programming
  * 
  * DESCRIPTION:
- * contains code for superior to view subordinate research
+ * contains code for the user to view their research
  * 
- * @note change line 51 to connect to database
+ * @note change line 59 to connect to database
  */
 package research;
+
+import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Desktop;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JTable;
-import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
+import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
-public class superior extends javax.swing.JFrame {
+public class myresearch extends javax.swing.JFrame {
 
     /**
-     * Creates new form superior
+     * Creates new form myresearch
      */
-    public superior() {
+    public myresearch() {
         initComponents();
-        show_user();
+        show_file();
     }
     
-    /* Function which returns ArrayList containing name,topic,year,filepath of selected year */
-    public ArrayList<User> userList(){
-//        System.out.print("I'm in userlist");
-        ArrayList<User> usersList=new ArrayList<>();
+    /*
+    Function to return filename,topic,year,filepath of user's work in ArrayList form
+    */
+    public ArrayList<Researchfile> researchList(){
+//        System.out.print("I'm in researchList");
+        ArrayList<Researchfile> researchesList=new ArrayList<>();
         try{
-        // connect to database
+            
         Connection con;
+        //connecting to database
         con  = DriverManager.getConnection("jdbc:mysql://localhost:3306/researchartefact", "root", "light123hash");
         Statement stmt = con.createStatement();
-//        String uname=jLabel_Username.getText();
-//        String uname="Peter Pan";
         String sql = "SELECT id FROM researchartefact.researcher WHERE username='"+Globals.uname+"'";
-//        System.out.print("uname is "+Globals.uname);
-//        System.out.print("query is "+sql);
+        System.out.print("uname is "+Globals.uname);
+        System.out.print("query is "+sql);
         ResultSet result = stmt.executeQuery(sql);
         
         if(result.next())
             {
                 int id = result.getInt("id");
-//                System.out.print("ID:"+id);
-//                String query="SELECT workId FROM researchartefact.researchwork WHERE researcherId="+id;
-//                Statement st=con.createStatement();
-//                ResultSet rs = st.executeQuery(query);
-                
-                //rs gives u all the workId...we have 11 and 13
+                System.out.print("ID:"+id);
+                String query="SELECT workId FROM researchartefact.researchwork WHERE researcherId="+id;
+                Statement st=con.createStatement();
+                ResultSet rs = st.executeQuery(query);
 //                System.out.print("\n@**"+rs.getString(1)+"**");
 //                System.out.print("\n@**"+rs.getString(2)+"**");
-//                while(rs.next())
-//                {
+                while(rs.next())
+                {
 //                    System.out.print("**"+rs.getString(i)+"**");
-                    String query2="SELECT r.username,w.topic,w.year,f.filelocation FROM researchartefact.fileinfo f, researchartefact.researcher r ,researchartefact.researchwork w WHERE f.workId=w.workId AND w.researcherId=r.id AND r.superiorId="+id;
+                    String query2="SELECT f.filename,r.topic,r.year,f.filelocation FROM researchartefact.fileinfo f, researchartefact.researchwork r WHERE f.workId=r.workId AND r.researcherId="+id+" AND f.workId="+rs.getString(1);                    
                     Statement st2=con.createStatement();
                     ResultSet rs2 = st2.executeQuery(query2);
-                    
 //                    String filename,String topic,int year,String filepath
-                     User user;
+                     Researchfile userfile;
                      while(rs2.next())
                      {
-                        user=new User(rs2.getString(1),rs2.getString(2),rs2.getInt(3),rs2.getString(4)); 
-                        usersList.add(user);
+                        userfile=new Researchfile(rs2.getString(1),rs2.getString(2),rs2.getInt(3),rs2.getString(4)); 
+                        researchesList.add(userfile);
                      }
-//                     System.out.print("\nok...i reached end of loop for 11");
-//                }
+                     System.out.print("\nok...i reached end of loop for 11");  
+                }
             }
-        
         }
+        
         catch(SQLException ex){
+            
              Logger.getLogger(superior.class.getName()).log(Level.SEVERE, null, ex);
-       }
-        return usersList; 
+        }
+        
+        return researchesList; 
     }
     
-/* Function to insert details of user's filename,topic,year,filepath into Object data and call table display function*/
-    public void show_user(){
-
-        System.out.print("I'm in show user");
-        ArrayList<User>list=userList();
-        DefaultTableModel model =(DefaultTableModel)jTable_Display_User.getModel();
+ /*
+   Function to insert details of user's filename,topic,year,filepath into Object data and call table display function
+ */
+    public void show_file(){
+//    System.out.print("I'm in show file");
+        ArrayList<Researchfile>list=researchList();
+   
+        DefaultTableModel model =(DefaultTableModel)jTable1.getModel();
         Object[][] data = new Object[list.size()][4];
         for(int i=0;i<list.size();i++)
         {
-             data[i][0]=list.get(i).getusername();
-             data[i][1]=list.get(i).gettopic();
-             data[i][2]=list.get(i).getyear();
-             data[i][3]=list.get(i).getfilepath();
-           
-        }
-//        
+            data[i][0]=list.get(i).getfilename();
+            data[i][1]=list.get(i).gettopic();
+            data[i][2]=list.get(i).getyear();
+            data[i][3]=list.get(i).getfilepath();
+       }
 //        for(int i=0;i<list.size();i++)
-//        {
-//             System.out.print("## "+data[i][0]+" ##");
-//             System.out.print("## "+data[i][1]+" ##\n");
-//           
-//        }
-//        
-        ButtonClumn bc=new ButtonClumn(data);
-    }
-
+//       {
+//            System.out.print(" "+data[i][0]);
+//            System.out.print(" "+data[i][1]);
+//            System.out.print(" "+data[i][2]);
+//            System.out.print(" "+data[i][3]+"\n");
+//            
+//       }
+       ButtonClumn bc=new ButtonClumn(data);
+//          bc.setVisible(true);
+       
+}
     
+/* Function to set up table */
 public class ButtonClumn extends JFrame {
   public ButtonClumn(Object[][] data){
       //COLUMN HEADERS
-        String columnHeaders[]={"Name","topic","year","viewfile"};
+        String columnHeaders[]={"filename","topic","year","clickme"};
         //CREATE OUR TABLE AND SET HEADER
         JTable table=new JTable(data,columnHeaders);
        
@@ -133,7 +141,7 @@ public class ButtonClumn extends JFrame {
         //SET CUSTOM EDITOR TO clickme COLUMN
         table.getColumnModel().getColumn(3).setCellEditor(new ButtonEditor(new JTextField()));
         //SCROLLPANE,SET SZE,SET CLOSE OPERATION
-//        JScrollPane pane=new JScrollPane(table);
+//       JScrollPane pane=new JScrollPane(table);
         jScrollPane1.getViewport ().add(table);
 //        getContentPane().add(pane);
 //        setSize(450,100);
@@ -141,7 +149,8 @@ public class ButtonClumn extends JFrame {
 //        setDefaultCloseOperation(EXIT_ON_CLOSE);
       
   }
-    //BUTTON RENDERER CLASS
+  
+/* BUTTON RENDERER CLASS */
 class ButtonRenderer extends JButton implements  TableCellRenderer
 {
 
@@ -161,7 +170,7 @@ class ButtonRenderer extends JButton implements  TableCellRenderer
   }
 
 }
-//BUTTON EDITOR CLASS
+/* BUTTON EDITOR CLASS */
 class ButtonEditor extends DefaultCellEditor
 {
   protected JButton btn;
@@ -235,51 +244,6 @@ class ButtonEditor extends DefaultCellEditor
   }
   }
 }
-    
-    
-    
-    
-//    public void fillStudent(JTable table)
-//    {
-//        Connection connection;
-//        PreparedStatement ps;
-//        Statement stmt = null;
-//        try{
-//            String uname=jLabel_Username.getText();
-//        connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/researchartefact", "root", "light123hash");
-//        
-//         stmt = connection.createStatement();
-//            String sql = "SELECT id FROM researchartefact.researcher WHERE username='"+uname+"'";
-////            System.out.print(sql);
-//            ResultSet result = stmt.executeQuery(sql);
-//            
-//            if(result.next())
-//            {
-//                int id = result.getInt("id");
-//                ps=connection.prepareStatement("SELECT username,id FROM researchartefact.researcher WHERE superiorId="+id);
-//                ResultSet rs=ps.executeQuery();
-//                
-//                DefaultTableModel model = (DefaultTableModel)table.getModel();
-//                
-//                Object[] row;
-//                
-//                while(rs.next())
-//                {
-//                    row=new Object[2];
-//                    row[0]=rs.getString(1);
-//                    row[1]=rs.getInt(2);
-//                    
-//                    model.addRow(row);
-//                }
-//                
-//            }
-//        
-//        
-//        }catch(SQLException ex){
-//             Logger.getLogger(superior.class.getName()).log(Level.SEVERE, null, ex);
-//       }
-//    }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -289,13 +253,10 @@ class ButtonEditor extends DefaultCellEditor
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        jLabel_Username = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable_Display_User = new javax.swing.JTable();
+        jTable1 = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -303,16 +264,7 @@ class ButtonEditor extends DefaultCellEditor
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setFont(new java.awt.Font("Futura", 0, 14)); // NOI18N
-        jLabel1.setText("WELCOME  TO SUPERIOR PAGE!");
-
-        jLabel_Username.setFont(new java.awt.Font("Futura", 1, 24)); // NOI18N
-        jLabel_Username.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-
-        jLabel4.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
-        jLabel4.setText("SUBORDINATE WORK LIST");
-
-        jTable_Display_User.setModel(new javax.swing.table.DefaultTableModel(
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -320,18 +272,18 @@ class ButtonEditor extends DefaultCellEditor
 
             }
         ));
-        jScrollPane1.setViewportView(jTable_Display_User);
+        jScrollPane1.setViewportView(jTable1);
+
+        jLabel1.setFont(new java.awt.Font("Futura", 1, 18)); // NOI18N
+        jLabel1.setText("My Researches!");
 
         jButton1.setFont(new java.awt.Font("Futura", 0, 14)); // NOI18N
-        jButton1.setText("LOGOUT");
+        jButton1.setText("GO BACK");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
-
-        jLabel2.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
-        jLabel2.setText("You can view all your subordinate research work and monitor their progress here");
 
         jPanel1.setBackground(new java.awt.Color(0, 0, 0));
 
@@ -351,19 +303,20 @@ class ButtonEditor extends DefaultCellEditor
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 18, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(jLabel5))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                            .addComponent(jLabel6)
-                            .addGap(71, 71, 71))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                            .addComponent(jLabel7)
-                            .addContainerGap()))))
+                        .addGap(12, 12, 12)
+                        .addComponent(jLabel5)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 8, Short.MAX_VALUE)
+                        .addComponent(jLabel7)))
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel6)
+                .addGap(71, 71, 71))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -374,58 +327,43 @@ class ButtonEditor extends DefaultCellEditor
                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(108, Short.MAX_VALUE))
+                .addContainerGap(147, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel_Username, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jLabel2)
-                .addGap(43, 43, 43))
             .addGroup(layout.createSequentialGroup()
-                .addGap(210, 210, 210)
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(21, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton1)
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(29, 29, 29)
+                        .addGap(120, 120, 120)
+                        .addComponent(jLabel1)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(26, 26, 26))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel_Username, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(33, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(2, 2, 2)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel1)
                         .addGap(18, 18, 18)
-                        .addComponent(jLabel2)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addComponent(jLabel4)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton1)))
-                .addGap(6, 6, 6))
+                        .addComponent(jButton1)
+                        .addGap(15, 15, 15))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(29, 29, 29))))
         );
 
         pack();
@@ -434,7 +372,7 @@ class ButtonEditor extends DefaultCellEditor
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         setVisible(false);
-        signup mf = new signup();
+        researcherpage mf = new researcherpage();
         mf.setLocationRelativeTo(null);
         mf.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -456,21 +394,20 @@ class ButtonEditor extends DefaultCellEditor
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(superior.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(myresearch.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(superior.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(myresearch.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(superior.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(myresearch.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(superior.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(myresearch.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        
+
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new superior().setVisible(true);
-                
+                new myresearch().setVisible(true);
             }
         });
     }
@@ -478,14 +415,11 @@ class ButtonEditor extends DefaultCellEditor
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    public static javax.swing.JLabel jLabel_Username;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable_Display_User;
+    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }
