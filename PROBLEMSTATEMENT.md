@@ -28,15 +28,13 @@
 
   relevant files
 
-  **Implementation Requirements: \#\#**
+## Implementation Requirements:
 
-  DB Design:Use MySQL database to store tables containing user level information, research level
+  ### DB Design: 
+  Use MySQL database to store tables containing user level information, research level information and file level information.     
+  Relevant columns in research data table can be decided by developer.
 
-  information and file level information. Relevant columns in research data table can be decided by
-
-  developer.
-
-  Screens:
+  ### Screens:
 
 * [x] Screen 1 : Text Boxes for username and password and submit button to be provided.
 * [x] Screen 2: To view information for Superior.
